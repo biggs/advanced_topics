@@ -27,7 +27,7 @@ fprintf('\nCCA\n----------\n')
 
 [V, d] = eig(pinv(RH_block_cca)*LH_block, 'vector');
 [max_gen_eig, max_gen_eig_index] = max(d);
-fprintf("Largest eigenvalue: %f\n",max_gen_eig)
+fprintf("Largest eigenvalue: %f\n", max_gen_eig)
 
 % a and b unnormalised parts of biggest eigenvector; alpha and beta normalised
 a = V(1:n,max_gen_eig_index);
@@ -37,7 +37,7 @@ beta = b ./ (b'*(Lt*Lt + normalising_constant*Lt)*b);
 
 
 %%----------- Plotting
-figure; f_y = @(y) plot_dual_gaussian(y,beta,Y_samples,eta);
+figure; f_y = @(y) gaussian_kernel_projection(y,beta,Y_samples,eta);
 f_y_samples = arrayfun(f_y, Y_samples);
 scatter(Y_samples,f_y_samples)
 title('Plot of largest kernel canonical projection g for data Y')
@@ -48,13 +48,6 @@ ylabel('g(y)')
 
 
 % -------------- Functions
-
-function g = plot_dual_gaussian(y, dual, samples, eta)
-  n = numel(samples);
-  k_yjs_y = @(yjs, y) exp(-((yjs-y).^2)/2/eta);
-  k_samples_y = k_yjs_y(samples,y);
-  g = (k_samples_y - sum(k_samples_y)/n)'*dual;
-end
 
 function kxy = gaussian_kernel(diff,eta)
   kxy = exp(-(norm(diff)^2)/2/eta^2);
