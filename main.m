@@ -49,18 +49,15 @@ ylabel('g(y)')
 
 % -------------- Functions
 
-function kxy = gaussian_kernel(diff,eta)
-  kxy = exp(-(norm(diff)^2)/2/eta^2);
-end
-
 function K = gaussianGram(X, eta)
   n = length(X);
   K = zeros(n);
   for i = 1:n
     for j = 1:n
-      K(i,j) = gaussian_kernel(X(i,:) - X(j,:), eta);
+      K(i,j) = norm(X(i,:) - X(j,:));
     end
   end
+  K = exp(- K.^2 /2/eta^2);
 end
 
 
