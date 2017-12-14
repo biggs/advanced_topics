@@ -10,4 +10,3 @@ function f = gaussian_kernel_projection(x, dual, samples, eta)
   end
   f = (k_samples_x - sum(k_samples_x)/N)'*dual;
 end
-
