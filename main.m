@@ -50,10 +50,10 @@ ylabel('g(y)')
 % -------------- Functions
 
 function K = gaussianGram(X, eta)
-  n = length(X);
-  K = zeros(n);
-  for i = 1:n
-    for j = 1:n
+  N = length(X);
+  K = zeros(N);
+  for i = 1:N
+    for j = 1:N
       K(i,j) = norm(X(i,:) - X(j,:));
     end
   end
