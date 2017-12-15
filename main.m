@@ -38,7 +38,7 @@ beta = b ./ (b'*(Lt*Lt + normalising_constant*Lt)*b);
 
 %% ----------- Projections
 g_y = @(y) gaussian_kernel_projection(y,beta,Y_samples,eta);
-g_y_samples = arrayfun(f_y, Y_samples);
+g_y_samples = arrayfun(g_y, Y_samples);
 
 f_x = @(x) gaussian_kernel_projection(x,alpha,X_samples,eta);
 f_x_samples = zeros(n,1);
@@ -52,10 +52,11 @@ title('Plot of largest kernel canonical projection g for data Y')
 xlabel('y')
 ylabel('g(y)')
 
-figure; scatter(f_x_samples,f_y_samples)
+figure; scatter(f_x_samples,g_y_samples)
+figure; scatter(sum(X_samples,2),f_x_samples)
 
 % CCA correlation value
-corr(f_x_samples, g_y_samples)
+fprintf("CCA Projection Correlation: %f\n", corr(f_x_samples, g_y_samples))
 
 
 
